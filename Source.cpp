@@ -81,6 +81,6 @@ int main()
 		system("pause");
 	} while (true);
 
-
+	return 0;
 
 }

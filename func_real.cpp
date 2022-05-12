@@ -9,34 +9,38 @@ void Queue::push(int data)
 	else // if not
 	{
 		el* current = this->head; // take pointer on 1 element
-		bool negative = false;  
-		if (data < 0) { data = data * -1; negative = true; }
+		bool negative = false;  // ** if the number is negative , his remainder of division by 10 is not his last digit,
+								// for comfort we turn this digit to positive and bool negative to true ,
+								// and after element founding , we change his back to negative
+		if (data < 0) { data = data * -1; negative = true; } //**
 
-		while (current->next!=nullptr && data%10>=current->next->data%10) 
+		while (current->next!=nullptr && data%10>=current->next->data%10)  // founding place for our element
 		{
 			current = current->next;
 		}
-		if (negative) { data = -data; }
-		el* newEl = new el(data, current->next);
-		current->next = newEl;
-		Size++;
+
+		if (negative) { data = - data; }//**
+
+		el* newEl = new el(data, current->next); // creating new element with pointer on next element
+		current->next = newEl; // previous element now pointed on our new element
+		Size++; // increase queue size
 		
 	}
 }
 
 void Queue::pop()
 {
-	el* temp = this->head;
-	head = head->next;
+	el* temp = this->head; // create first element tempoary pointer
+	head = head->next; // second element in queue now is first element
 	
-	delete temp;
-	Size--;
+	delete temp; // delete old first element
+	Size--; // decrease queue size
 }
 
 int Queue::first_info()
 {
-	if (is_empty()) throw QUEUE_EMPTY_MSQ;
-	else return head->data;
+	if (is_empty()) throw QUEUE_EMPTY_MSQ; // if queue is empty throw error
+	else return head->data; // else return first element data
 	
 }
 
@@ -48,16 +52,16 @@ bool Queue::is_empty()
 
 int Queue::last_info()
 {
-	if (is_empty()) throw QUEUE_EMPTY_MSQ;
+	if (is_empty()) throw QUEUE_EMPTY_MSQ; // if queue is empty throw error
 	else
 	{
-		el* current = this->head;
-		while (current->next != nullptr) current = current->next;
-		return current->data;
+		el* current = this->head; 
+		while (current->next != nullptr) current = current->next; // else looking for last element
+		return current->data; // return last element
 	}
 }
 Queue::Queue()
 {
-	head=nullptr;
-	Size = 0;
+	head=nullptr; // while first element wasn't added , it is nullpointer
+	Size = 0; // size initialization
 }
