@@ -1,20 +1,22 @@
 #include "header.h"
 void Queue::push(int data)
 {
-	if (is_empty()||head->data>data) // if queue if empty , create first element in queue
+	bool negative = false;  // ** if the number is negative , his remainder of division by 10 is not his last digit,
+						// for comfort we turn this digit to positive and bool negative to true ,
+						// and after element founding , we change his back to negative
+	if (data < 0) { data = data * -1; negative = true; } //**
+
+	if (is_empty()||data%10<this->head->data%10) // if queue if empty , create first element in queue
 	{
+		if (negative) { data = - data; }
 		head = new el(data, head);
 		Size++;
 	}
 	else // if not
 	{
 		el* current = this->head; // take pointer on 1 element
-		bool negative = false;  // ** if the number is negative , his remainder of division by 10 is not his last digit,
-								// for comfort we turn this digit to positive and bool negative to true ,
-								// and after element founding , we change his back to negative
-		if (data < 0) { data = data * -1; negative = true; } //**
 
-		while (current->next!=nullptr && data%10>=current->next->data%10)  // founding place for our element
+		while (current->next!=nullptr && data%10 >= current->next->data%10)  // founding place for our element
 		{
 			current = current->next;
 		}
